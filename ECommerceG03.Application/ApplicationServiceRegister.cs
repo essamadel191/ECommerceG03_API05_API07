@@ -10,6 +10,7 @@ namespace ECommerceG03.Application
         {
             services.AddAutoMapper(c => { }, typeof(ApplicationServiceRegister).Assembly);
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICacheService, CacheService>();
 
             return services;
         }

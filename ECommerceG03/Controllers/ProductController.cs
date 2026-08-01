@@ -1,6 +1,7 @@
 ﻿using ECommerceG03.Application.Common;
 using ECommerceG03.Application.Contracts;
 using ECommerceG03.Application.DTOs.ProductDtos;
+using ECommerceG03.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceG03.Controllers
@@ -26,6 +27,7 @@ namespace ECommerceG03.Controllers
         /// <param name="sort" optional="true" value="{0:None,1:NameAsc,2:NameDesc,3:PriceAsc,4:PriceDesc}"></param>
         /// <returns>List of products</returns>
         [HttpGet]
+        [RedisCache(90)]
         public async Task<ActionResult<PaginatedResult<ProductDto>>> GetAllProducts([FromQuery] ProductQueryParams queryParams, CancellationToken ct = default)
         {
             var result = await _productService.GetAllProductsAsync(queryParams, ct);

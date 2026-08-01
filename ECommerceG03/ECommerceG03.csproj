@@ -7,9 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\..\..\Session 02\Files\brands.json" Link="DataSeed\brands.json" />
-    <Content Include="..\..\..\Session 02\Files\products.json" Link="DataSeed\products.json" />
-    <Content Include="..\..\..\Session 02\Files\types.json" Link="DataSeed\types.json" />
+    <Compile Remove="DataSeed\**" />
+    <Content Remove="DataSeed\**" />
+    <EmbeddedResource Remove="DataSeed\**" />
+    <None Remove="DataSeed\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,10 +26,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ECommerceG03.Application\ECommerceG03.Application.csproj" />
     <ProjectReference Include="..\ECommerceG03.Infrastructure\ECommerceG03.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DataSeed\" />
   </ItemGroup>
 
 </Project>
