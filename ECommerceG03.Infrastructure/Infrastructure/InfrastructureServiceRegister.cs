@@ -12,6 +12,8 @@ using System.Text;
 using ECommerceG03.Infrastructure.Identity.Data;
 using ECommerceG03.Infrastructure.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
+using ECommerceG03.Application.Contracts;
+using ECommerceG03.Infrastructure.Identity.Services;
 
 namespace ECommerceG03.Infrastructure.Infrastructure
 {
@@ -34,6 +36,8 @@ namespace ECommerceG03.Infrastructure.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
             services.AddScoped<ICacheRepository,CacheRepository>();
+            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<ITokenService, TokenSerivce>();
 
 
             // Register Redis connection multiplexer as a singleton so it can be injected where needed

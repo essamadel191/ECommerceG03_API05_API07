@@ -1,6 +1,7 @@
 using ECommerceG03;
 using ECommerceG03.Application;
 using ECommerceG03.Application.Common;
+using ECommerceG03.Infrastructure.Identity.Services;
 using ECommerceG03.Infrastructure.Infrastructure;
 using Scalar.AspNetCore;
 
@@ -25,6 +26,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JWT"));
 
 var app = builder.Build();
 

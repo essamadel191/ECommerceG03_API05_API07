@@ -9,5 +9,6 @@ namespace ECommerceG03.Application.Contracts
     public interface IAuthenticationService
     {
         Task<Result<UserDto>> LoginAsync(LoginDto loginDto, CancellationToken ct = default);
+        Task<Result<UserDto>> RegisterAsync(RegisterDtos registerDtos, CancellationToken ct = default);
     }
 }

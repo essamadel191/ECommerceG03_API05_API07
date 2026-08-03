@@ -2,6 +2,7 @@
 using ECommerceG03.Application.Contracts;
 using ECommerceG03.Application.DTOs.ProductDtos;
 using ECommerceG03.Attributes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceG03.Controllers
@@ -41,6 +42,7 @@ namespace ECommerceG03.Controllers
         /// <param name="ct" optional="true">Cancellation token</param>
         /// <param name="id">Product ID</param>
         /// <returns>Product Details</returns>
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDto>> GetProductById(int id, CancellationToken ct = default)
         {

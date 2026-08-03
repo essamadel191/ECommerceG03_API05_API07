@@ -7,7 +7,7 @@ namespace ECommerceG03.Application.DTOs.ProductDtos
     public class BrandDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
 
     }
 }

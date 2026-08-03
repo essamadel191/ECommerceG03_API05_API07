@@ -7,20 +7,16 @@ using System.Text;
 
 namespace ECommerceG03.Application.Specification
 {
-    public class BaseSpecification<TEntity, TKey> : ISpecification<TEntity, TKey> where TEntity : BaseEntity<TKey>
+    public class BaseSpecification<TEntity, TKey>(Expression<Func<TEntity, bool>> criteriaExpression) 
+        : ISpecification<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
         public ICollection<Expression<Func<TEntity, object>>> IncludeExpressions { get; } = [];
-        public Expression<Func<TEntity, bool>> Criteria { get; private set; }
+        public Expression<Func<TEntity, bool>> Criteria { get; private set; } = criteriaExpression;
 
 
         protected void AddInclude(Expression<Func<TEntity, object>> includeExpression)
         {
             IncludeExpressions.Add(includeExpression);
-        }
-
-        public BaseSpecification(Expression<Func<TEntity, bool>> criteriaExpression)
-        {
-            Criteria = criteriaExpression;
         }
 
 
