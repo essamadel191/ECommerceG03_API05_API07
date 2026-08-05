@@ -10,5 +10,6 @@ namespace ECommerceG03.Application.Contracts
     {
         Task<Result<UserDto>> LoginAsync(LoginDto loginDto, CancellationToken ct = default);
         Task<Result<UserDto>> RegisterAsync(RegisterDtos registerDtos, CancellationToken ct = default);
+        Task<Result<bool>> DeleteUserByUsernameAsync(string userName, CancellationToken ct);
     }
 }

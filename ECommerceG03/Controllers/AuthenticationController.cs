@@ -21,5 +21,9 @@ namespace ECommerceG03.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult<UserDto>> RegisterAsync([FromBody] RegisterDtos registerDto,CancellationToken ct)
             => ToActionResult(await _authenticationService.RegisterAsync(registerDto, ct));
+
+        [HttpDelete("DeleteUser/{username}")]
+        public async Task<ActionResult<bool>> DeleteUserAsync(string username, CancellationToken ct)
+            => ToActionResult(await _authenticationService.DeleteUserByUsernameAsync(username, ct));
     }
 }

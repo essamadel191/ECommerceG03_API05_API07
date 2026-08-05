@@ -17,6 +17,17 @@ namespace ECommerceG03.Application.Services
             _identityService = identityService;
             _tokenService = tokenService;
         }
+
+        public async Task<Result<bool>> DeleteUserByUsernameAsync(string userName, CancellationToken ct)
+        {
+            var userResult = await _identityService.GetUserByUsernameAsync(userName, ct);
+            var deleteResult = await _identityService.DeleteUserAsync(userResult.data.Id, ct);
+            if (!deleteResult.IsSuccess)
+                return Result<bool>.Fail(deleteResult.Errors);
+
+            return Result<bool>.Ok(true);
+        }
+
         public async Task<Result<UserDto>> LoginAsync(LoginDto loginDto, CancellationToken ct = default)
         {
             // Get User By Email
@@ -52,6 +63,13 @@ namespace ECommerceG03.Application.Services
 
 
             var rolesResult = await _identityService.GetUserRoles(user.data.Email, ct);
+            if (!rolesResult.IsSuccess)
+            {
+                // RoleBack
+                var deleteResult = await _identityService.DeleteUserAsync(user.data.Id, ct);
+                return Result<UserDto>.Fail(rolesResult.Errors);
+
+            }
 
             var userDto = new UserDto
             {
@@ -61,5 +79,7 @@ namespace ECommerceG03.Application.Services
             };
             return Result<UserDto>.Ok(userDto);
         }
+
+
     }
 }
