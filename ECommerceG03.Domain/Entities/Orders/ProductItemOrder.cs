@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ECommerceG03.Domain.Entities.Orders
+{
+    public class ProductItemOrder
+    {
+        public int ProductId { get; set; }
+        public string ProductName { get; set; } = default!;
+        public string PictureUrl { get; set; } = default!;
+
+    }
+}
