@@ -1,4 +1,5 @@
-﻿using ECommerceG03.Domain.Entities.Products;
+﻿using ECommerceG03.Domain.Entities.Orders;
+using ECommerceG03.Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace ECommerceG03.Infrastructure.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 
     }
 }
