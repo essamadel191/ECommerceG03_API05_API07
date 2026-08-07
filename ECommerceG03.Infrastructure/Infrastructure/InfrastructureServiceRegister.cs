@@ -1,19 +1,21 @@
-﻿using ECommerceG03.Domain.Contracts;
+﻿using ECommerceG03.Application.Contracts;
+using ECommerceG03.Application.Profiles;
+using ECommerceG03.Domain.Contracts;
 using ECommerceG03.Infrastructure.Data;
 using ECommerceG03.Infrastructure.DataSeeding;
+using ECommerceG03.Infrastructure.Entities.Identity;
+using ECommerceG03.Infrastructure.Identity.Data;
+using ECommerceG03.Infrastructure.Identity.Services;
 using ECommerceG03.Infrastructure.Repository;
-using StackExchange.Redis;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Text;
-using ECommerceG03.Infrastructure.Identity.Data;
-using ECommerceG03.Infrastructure.Entities.Identity;
-using Microsoft.AspNetCore.Identity;
-using ECommerceG03.Application.Contracts;
-using ECommerceG03.Infrastructure.Identity.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
+using System.Text;
 
 namespace ECommerceG03.Infrastructure.Infrastructure
 {
@@ -31,7 +33,18 @@ namespace ECommerceG03.Infrastructure.Infrastructure
             // Get Data From appsettings.json
             var jwtSettings = configuration.GetSection("JWT").Get<JwtSettings>()
                 ?? throw new InvalidOperationException("JWT settings are not configured");
-            
+
+            services.Configure<UrlSettings>(configuration.GetSection("UrlSettings"));
+
+            services.AddOptions<UrlSettings>()
+                .Bind(configuration.GetSection("UrlSettings"))
+                .ValidateDataAnnotations() // requires [Required] on UrlSettings.BaseUrl (recommended)
+                .Validate(u => !string.IsNullOrWhiteSpace(u.BaseUrl), "UrlSettings:BaseUrl must be configured")
+                .ValidateOnStart(); // fail-fast if invalid
+
+            // register the concrete instance for resolvers/consumers that take UrlSettings directly
+            services.AddSingleton(sp => sp.GetRequiredService<IOptions<UrlSettings>>().Value);
+
             services.AddKeyedScoped<IDataSeeder, CatalogDataSeed>("Catalog");
             services.AddKeyedScoped<IDataSeeder, IdentityDataSeeder>("Identity");
             
@@ -73,6 +86,8 @@ namespace ECommerceG03.Infrastructure.Infrastructure
 
             // Register Redis connection multiplexer as a singleton so it can be injected where needed
             // Use configuration value "Redis:ConnectionString" if present, otherwise fall back to localhost:6379
+            services.AddScoped<IBasketRepository, BasketRepository>();
+
             var redisConnectionString = configuration.GetSection("Redis:ConnectionString").Value ?? "localhost:6379";
             services.AddSingleton<IConnectionMultiplexer>(sp => ConnectionMultiplexer.Connect(redisConnectionString));
             //services.AddScoped<IProductService, ProductService>();

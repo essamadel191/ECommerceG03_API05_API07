@@ -1,6 +1,7 @@
 ﻿using ECommerceG03.Application.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ECommerceG03.Controllers
 {
@@ -55,5 +56,7 @@ namespace ECommerceG03.Controllers
             return new ObjectResult(problemDetails){ StatusCode = statusCode };
         }
 
+        protected string GetEmailFromToken()
+            => User.FindFirstValue(ClaimTypes.Email) ?? throw new UnauthorizedAccessException("No Email Claim Found");
     }
 }

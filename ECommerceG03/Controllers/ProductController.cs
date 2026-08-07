@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceG03.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class ProductController : ApiBaseController
     {
         private readonly IProductService _productService;

@@ -12,13 +12,12 @@ namespace ECommerceG03.Domain.Entities.Orders
         }
 
         public Order(string buyerEmail, OrderAddress shipToAddress, ICollection<OrderItem> items
-            , DeliveryMethod deliveryMethod, int deliveryMethodId, decimal subtotal)
+            , DeliveryMethod deliveryMethod, decimal subtotal)
         {
             BuyerEmail = buyerEmail;
             ShipToAddress = shipToAddress;
             Items = items;
             DeliveryMethod = deliveryMethod;
-            DeliveryMethodId = deliveryMethodId;
             Subtotal = subtotal;
         }
 

@@ -12,7 +12,10 @@ namespace ECommerceG03.Application
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICacheService, CacheService>();
+            services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IOrderService, OrderService>();
+            
 
             return services;
         }
